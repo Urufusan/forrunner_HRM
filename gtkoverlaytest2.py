@@ -24,6 +24,7 @@ class TimeLabel(Gtk.Label):
 
     def updateEvent_Label(self):
         timeStr = self.get_proc_line()
+        print(self._win_was_moved, self._last_output)
         if not self._win_was_moved:
             if not self._last_output == "Connecting...":
                 self._windowobjthingy.move(self._windowobjthingy.get_position()[0],0)
@@ -36,6 +37,7 @@ class TimeLabel(Gtk.Label):
     
     def get_proc_line(self):
             output = self.process.stdout.readline().decode().strip()
+            print(output)
             # print(output)
             if self.process.poll() is not None:
                 Gtk.main_quit()

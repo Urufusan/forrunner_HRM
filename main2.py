@@ -3,6 +3,7 @@ from pprint import pprint
 import bitstruct
 import struct
 from bleak import BleakClient
+import sys
 global last_print
 global last_beat
 last_print = ""
@@ -32,13 +33,14 @@ async def run(address):
             final_print = f"|HR: {(hr_val if snsr_detect else ' --'):3} BPM {'♥︎' if last_beat else ' '}|"
             #if last_print != final_print:
             print(final_print)# end="\r")
+            print(final_print, file=sys.stderr)
             last_print = final_print
             # sys.stdout.flush()
         # pprint([serv_o.description for serv_o in client.services.services.values()])
         await client.start_notify(HR_MEAS, hr_val_handler)
 
         while client.is_connected:
-            await asyncio.sleep(0.6)
+            await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
